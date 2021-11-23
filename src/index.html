@@ -1,61 +1,8 @@
 
-
-<style>
-
-  
-.menu-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-decoration: none;
-  width: 300px;
-  height: 300px;
-  background: linear-gradient(236deg, #7a519b, #4d0a83, #3e0e65);
-   background-size: 600% 600%;
-  animation: box-animation 3s ease infinite;
-  border-radius: 20px;
-  transition: transform 1500ms ;
-  font-size: 30px;
-  text-transform: uppercase;
-
-}
-.menu-btn:hover {
-  transform: scale(1.23);
-
-}
-body {
-    background: linear-gradient(213deg, #89ecd2, #1e4b3f);
-    background-size: 400% 400%;
-    animation: bg-animation 0s ease infinite;
-}
-
-@keyframes bg-animation {
-    0%{background-position:92% 0%}
-    50%{background-position:9% 100%}
-    100%{background-position:92% 0%}
-}
-
-
-.menu-container {
- width: 800px;
- height: 100%;
- margin: 0 auto;
- display: flex;
- justify-content: space-between;
- align-items: center;
-}
-@keyframes box-animation {
-  0%{background-position:0% 51%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 51%}
-}
-
-</style>
-
+<link rel="stylesheet" href="./scss/_main-menu.scss">
 <div class="menu-container">
-
-  <a class='menu-btn'  href="./load-more.html">load more</a>
+<a class='menu-btn'  href="./load-more.html">
+  <span> load more</span></a>
   <a class='menu-btn ' href="./infinite-load.html">infinite load</a>
 
   </div>

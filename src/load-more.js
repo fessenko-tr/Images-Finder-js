@@ -1,20 +1,40 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
 import 'bootstrap';
-import { Notify } from 'notiflix';
+import './scss/_load-more.scss';
+import { throttle } from 'infinite-scroll/js/core';
 import template from './templates/template';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import PixabayPicsGetter from './pics-getter';
 import MarkupMaker from './mark-up-maker';
+import { Notify } from 'notiflix';
 
 
 const formRef = document.querySelector('#search-form');
-const onPicsEndText = document.querySelector('.finish');
+const onPicsEndText = document.querySelector('.finish-text');
 const loadMoreBtn = document.querySelector('.btnLoad');
 const galleryRef = document.querySelector('.gallery');
 const userQuery = document.querySelector('input')
 const loaderRef = document.querySelector('.spinner-border')
+const navBarRef = document.querySelector('.navbar')
+
+
+
+
+window.addEventListener('scroll', throttle(scrollFunction, 500));
+
+
+function scrollFunction() {
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    console.log(document.body.scrollTop)
+    navBarRef.style.backgroundColor = "rgb(24, 22, 32, 0.7)";
+  } else {
+    console.log(document.body.scrollTop)
+    navBarRef.style.backgroundColor = "rgb(24, 22, 32);";
+  }
+}
+
+
 
 const loadMorepicsGetter = new PixabayPicsGetter(40);
 const pictureGallery = new SimpleLightbox('.gallery div a');

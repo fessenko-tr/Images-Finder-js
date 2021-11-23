@@ -1,0 +1,31 @@
+img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  
+  .card-img-top {
+    height: 75%;
+  }
+  
+  
+  .hidden {
+    opacity: 0;
+    display: none;
+  }
+
+  .navbar {
+    background: #181620 ;
+}
+
+body {
+  background: rgb(24,22,32);
+  background: linear-gradient(180deg, rgba(24,22,32,1) 26%, rgba(130,77,182,1) 63%);
+}
+
+.finish-text {
+ margin: 20, auto, 20;
+ text-transform: uppercase;
+ font-size: 30px;
+  color: white;
+}

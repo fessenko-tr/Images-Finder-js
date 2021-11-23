@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
 import 'bootstrap';
+import './scss/_infinite-load.scss'
 import { Notify } from 'notiflix';
 import template from './templates/template';
 import SimpleLightbox from 'simplelightbox';
