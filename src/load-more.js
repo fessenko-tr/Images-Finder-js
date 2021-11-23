@@ -55,7 +55,7 @@ async function loadMore() {
     createMarkupAndRefreshGallery(pics);
     loaderRef.classList.add('hidden')
     smoothScrollOnLoad();
-    isLastPage();
+    isLastPage() && onPicsEndText.classList.remove('hidden');
   
 }
 
@@ -79,10 +79,11 @@ function smoothScrollOnLoad() {
 
 function isLastPage() {
   if (galleryRef.childElementCount >= loadMorepicsGetter.totalHits) {
-    onPicsEndText.classList.remove('hidden');
-    loadMoreBtn.classList.add('hidden');
+      loadMoreBtn.classList.add('hidden');
+      return true;
   } else {
     loadMoreBtn.classList.remove('hidden');
+    return false;
   }
 }
 
