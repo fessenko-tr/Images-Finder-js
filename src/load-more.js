@@ -1,9 +1,12 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
+import 'bootstrap';
 import { Notify } from 'notiflix';
 import template from './templates/template';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import PixabayPicsGetter from './pics-getter';
+import MarkupMaker from './mark-up-maker';
 
 
 const formRef = document.querySelector('#search-form');
@@ -11,21 +14,23 @@ const onPicsEndText = document.querySelector('.finish');
 const loadMoreBtn = document.querySelector('.btnLoad');
 const galleryRef = document.querySelector('.gallery');
 const userQuery = document.querySelector('input')
+const loaderRef = document.querySelector('.spinner-border')
 
-
-const picsGetter = new PixabayPicsGetter(40);
+const loadMorepicsGetter = new PixabayPicsGetter(40);
 const pictureGallery = new SimpleLightbox('.gallery div a');
+const loadMoreMarkupMaker = new MarkupMaker(galleryRef,template, loadMorepicsGetter )
+
 
 formRef.addEventListener('submit', e => {
   e.preventDefault();
-  picsGetter.q = userQuery.value;
+  loadMorepicsGetter.q = userQuery.value;
   loadInitialPics();
 });
 
 loadMoreBtn.addEventListener('click', loadMore);
 
  function getPicsFromServer() {
-  return picsGetter.fetchUrl();
+  return loadMorepicsGetter.fetchUrl();
 }
 
 async function loadInitialPics() {
@@ -34,20 +39,21 @@ async function loadInitialPics() {
   try {
     const pics = await getPicsFromServer();
     Notify.success(`Hooray! We found ${pics.totalHits} images!`);
-    picsGetter.totalHits = pics.totalHits;
-    createMarkup(pics);
+    loadMorepicsGetter.totalHits = pics.totalHits;
+    createMarkupAndRefreshGallery(pics);
     isLastPage();
   } catch (error) {
     Notify.failure(error.message);
   }
 }
 
+
 async function loadMore() {
-    picsGetter.page += 1;
-    loadMoreBtn.classList.add('loader')
+  loadMorepicsGetter.page += 1;
+  loaderRef.classList.remove('hidden')
     const pics = await getPicsFromServer();
-    createMarkup(pics);
-    loadMoreBtn.classList.remove('loader')
+    createMarkupAndRefreshGallery(pics);
+    loaderRef.classList.add('hidden')
     smoothScrollOnLoad();
     isLastPage();
   
@@ -56,13 +62,11 @@ async function loadMore() {
 function clearInterfaceOnPicLoad() {
   onPicsEndText.classList.add('hidden');
   loadMoreBtn.classList.add('hidden');
-  galleryRef.innerHTML = '';
-  picsGetter.page = 1;
-  picsGetter.totalHits = 0;
+  loadMoreMarkupMaker.clearMarkup();
 }
 
-function createMarkup({ hits }) {
-  galleryRef.insertAdjacentHTML('beforeend', template(hits));
+function createMarkupAndRefreshGallery({ hits }) {
+  loadMoreMarkupMaker.createMarkup(hits, 'beforeend')
   pictureGallery.refresh();
 }
 
@@ -74,7 +78,7 @@ function smoothScrollOnLoad() {
 }
 
 function isLastPage() {
-  if (galleryRef.childElementCount >= picsGetter.totalHits) {
+  if (galleryRef.childElementCount >= loadMorepicsGetter.totalHits) {
     onPicsEndText.classList.remove('hidden');
     loadMoreBtn.classList.add('hidden');
   } else {
