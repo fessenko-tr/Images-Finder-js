@@ -1,17 +1,21 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
-import './scss/_infinite-load.scss'
+import '../scss/_infinite-load.scss'
 import { Notify } from 'notiflix';
-import template from './templates/template';
+import template from '../templates/template';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import PixabayPicsGetter from './pics-getter';
 import InfiniteScroll from 'infinite-scroll'
 import MarkupMaker from './mark-up-maker';
+import { throttle } from 'infinite-scroll/js/core';
+import { transparentNavOnScroll } from './index';
 
 const formRef = document.querySelector('#search-form');
 const galleryRef = document.querySelector('.gallery');
 const inputRef = document.querySelector('input')
+const navBarRef = document.querySelector('.navbar')
+
 
 const infinitePicsGetter = new PixabayPicsGetter(40);
 const pictureGallery = new SimpleLightbox('.gallery div a');
@@ -60,4 +64,10 @@ async function loadInitialPics(e){
         Notify.failure(error.message);
     } 
 }
+
+
+window.addEventListener('scroll', throttle(()=>{
+    transparentNavOnScroll(navBarRef, "rgb(24, 22, 32);", "rgb(24, 22, 32, 0.7)")
+}, 500));
+
 

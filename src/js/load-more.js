@@ -1,13 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
-import './scss/_load-more.scss';
+import '../scss/_load-more.scss';
 import { throttle } from 'infinite-scroll/js/core';
-import template from './templates/template';
+import template from '../templates/template';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import PixabayPicsGetter from './pics-getter';
 import MarkupMaker from './mark-up-maker';
 import { Notify } from 'notiflix';
+import { transparentNavOnScroll, smoothScroll } from './index';
+
 
 
 const formRef = document.querySelector('#search-form');
@@ -17,22 +19,6 @@ const galleryRef = document.querySelector('.gallery');
 const userQuery = document.querySelector('input')
 const loaderRef = document.querySelector('.spinner-border')
 const navBarRef = document.querySelector('.navbar')
-
-
-
-
-window.addEventListener('scroll', throttle(scrollFunction, 500));
-
-
-function scrollFunction() {
-  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-    console.log(document.body.scrollTop)
-    navBarRef.style.backgroundColor = "rgb(24, 22, 32, 0.7)";
-  } else {
-    console.log(document.body.scrollTop)
-    navBarRef.style.backgroundColor = "rgb(24, 22, 32);";
-  }
-}
 
 
 
@@ -74,7 +60,7 @@ async function loadMore() {
     const pics = await getPicsFromServer();
     createMarkupAndRefreshGallery(pics);
     loaderRef.classList.add('hidden')
-    smoothScrollOnLoad();
+    smoothScroll(galleryRef.firstElementChild.getBoundingClientRect().height * 2);
     isLastPage() && onPicsEndText.classList.remove('hidden');
   
 }
@@ -90,13 +76,6 @@ function createMarkupAndRefreshGallery({ hits }) {
   pictureGallery.refresh();
 }
 
-function smoothScrollOnLoad() {
-  window.scrollBy({
-    top: galleryRef.firstElementChild.getBoundingClientRect().height * 2,
-    behavior: 'smooth',
-  });
-}
-
 function isLastPage() {
   if (galleryRef.childElementCount >= loadMorepicsGetter.totalHits) {
       loadMoreBtn.classList.add('hidden');
@@ -107,3 +86,7 @@ function isLastPage() {
   }
 }
 
+
+window.addEventListener('scroll', throttle(()=>{
+  transparentNavOnScroll(navBarRef, "rgb(24, 22, 32);", "rgb(24, 22, 32, 0.7)")
+}, 500));
