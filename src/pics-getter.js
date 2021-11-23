@@ -8,20 +8,16 @@ class PixabayPicsGetter  {
   baseUrl ='https://pixabay.com/api/'
   queue = '';
 
-
-  constructor( perPage = 20 ) {
+  constructor( perPage ) {
   this.perPage = perPage;
-
   }
   
   composeURL(){
     return `${this.baseUrl}?key=${this.#PRIVATE_KEY}&q=${this.queue}&page=${this.page}&per_page=${this.perPage}&image_type=photo&orientation=horizontal&safesearch=true`
   }
+
   async fetchUrl() {
-  
   this.onEmptyQ();
-  
-  console.log(this.composeURL())
   const data = await axios.get(this.composeURL());
 
   this.onEmptyResults(data.data.hits);
@@ -41,22 +37,32 @@ class PixabayPicsGetter  {
   return this.queue;
   }
   
+  set itemsOnPage(itemsOnPage){
+    this.perPage = itemsOnPage;
+  } 
+
+  get itemsOnPage(){
+    return this.perPage;
+  }
+
+  get currentPage(){
+    return this.page;
+  }
+
   onEmptyQ(){
   if (this.queue.length === 0){
-   throw new Error('q is empty')
+   throw new Error('Enter something to get the pics!')
   }
   }
   
   onEmptyResults(data) {
   if(data.length === 0){
-  throw new Error('no pics');
+  throw new Error('Sorry, there are no images matching your search query. Please try again.');
   }
   }
-  
- 
+
   
   }
-  
-  
+
 
 export default PixabayPicsGetter;

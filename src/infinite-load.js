@@ -6,14 +6,14 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import PixabayPicsGetter from './pics-getter';
 import InfiniteScroll from 'infinite-scroll'
 
-const form = document.querySelector('#search-form');
-const gallery = document.querySelector('.gallery');
-const input = document.querySelector('input')
+const formRef = document.querySelector('#search-form');
+const galleryRef = document.querySelector('.gallery');
+const inputRef = document.querySelector('input')
 
-const picsGetter = new PixabayPicsGetter();
+const picsGetter = new PixabayPicsGetter(40);
 const pictureGallery = new SimpleLightbox('.gallery div a');
 
-const infiniteScroll = new InfiniteScroll(gallery, {
+const infiniteScroll = new InfiniteScroll(galleryRef, {
     path: ()=>picsGetter.composeURL(),
       responseBody: 'json',
       history: false,
@@ -21,7 +21,7 @@ const infiniteScroll = new InfiniteScroll(gallery, {
 
 });
 
-form.addEventListener('submit',loadInitialPics);
+formRef.addEventListener('submit',loadInitialPics);
 
 infiniteScroll.on( 'load', (body)=>{
     picsGetter.onEmptyResults(body.hits)
@@ -36,9 +36,9 @@ async function loadInitialPics(e){
     try {
         e.preventDefault();
         clearInterfaceOnPicLoad()
-        picsGetter.q = input.value;
+        picsGetter.q = inputRef.value;
         const pics = await picsGetter.fetchUrl();
-        Notify.success(`we have found ${pics.totalHits} pics!`);
+        Notify.success(`Hooray! We found ${pics.totalHits} images!`);
         infiniteScroll.off()
         infiniteScroll.loadNextPage();
 
@@ -48,23 +48,13 @@ async function loadInitialPics(e){
 }
 
 
-
-
-
-
-
-
-
-
-
-
   function createMarkup({ hits }) {
-    gallery.insertAdjacentHTML('beforeend', template(hits));
+    galleryRef.insertAdjacentHTML('beforeend', template(hits));
   }
   
 
   function clearInterfaceOnPicLoad() {
-  gallery.innerHTML = '';
+    galleryRef.innerHTML = '';
   picsGetter.page = 1;
   picsGetter.totalHits = 0;
 }
