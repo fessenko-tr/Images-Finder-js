@@ -25,18 +25,28 @@
 
 <div class="container pt-5 ">
 <div class="gallery row flex-wrap"></div>
-
-<button class="btnLoad hidden btn menu-btn w-25 d-flex mx-auto justify-content-center align-items-center" type="button" class="load-more">
-  <span class="spinner-border hidden spinner-border-sm "></span>
-  Load more
-</button>
 </div>
 
-<p class="finish-text text-center hidden ">No more pics to load 😤</p>
 
 
-  <script src="../js/load-more.js"></script>
-  
-  
+<div class="page-load-status">
+  <div class="loader-wheel infinite-scroll-request">
+    <i
+      ><i
+        ><i
+          ><i
+            ><i
+              ><i
+                ><i
+                  ><i
+                    ><i
+                      ><i
+                        ><i><i> </i></i></i></i></i></i></i></i></i></i></i
+    ></i>
+  </div>
+  <p class=" finish-text infinite-scroll-error text-center">No more pics to load 😤</p>
 
-  
+</div>
+
+<script src="./js/infinite-load.js"></script>
+
