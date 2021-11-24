@@ -1,15 +1,4 @@
 
-html {
-	height: 100%;
-	display: flex;
-}
-body {
-	position: relative;
-	margin: auto;
-	background: #181620;
-perspective: 500px;
-}
-
 a {
     text-decoration: none;
     color:  inherit;
@@ -20,7 +9,19 @@ a {
 	flex-direction: column;
 	transform: rotatex(10deg);
 	animation: rotateAngle 6s linear infinite;
-    margin-top: 35%;
+    
 	
 }
 
+.global-container {
+	height: 100%;
+    width: 100%;
+	display: flex;
+}
+
+.perspective-container {
+		position: relative;
+	margin: auto;
+	background: #181620;
+perspective: 500px;
+}
