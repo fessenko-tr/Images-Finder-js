@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
-import '../scss/_infinite-load.scss'
 import { Notify } from 'notiflix';
 import template from '../templates/template';
 import SimpleLightbox from 'simplelightbox';
@@ -18,7 +17,9 @@ const navBarRef = document.querySelector('.navbar')
 
 
 const infinitePicsGetter = new PixabayPicsGetter(40);
-const pictureGallery = new SimpleLightbox('.gallery div a');
+const pictureGallery = new SimpleLightbox('.gallery div a', {
+    scaleImageToRatio: true,
+});
 const infiniteMarkupMaker = new MarkupMaker(galleryRef,template, infinitePicsGetter )
 
 

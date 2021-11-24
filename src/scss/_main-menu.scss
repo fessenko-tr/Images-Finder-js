@@ -1,4 +1,3 @@
-@import './menu-btn';
 
 html {
 	height: 100%;
@@ -7,9 +6,8 @@ html {
 body {
 	position: relative;
 	margin: auto;
-	perspective: 500px;
 	background: #181620;
-
+perspective: 500px;
 }
 
 a {
@@ -23,5 +21,6 @@ a {
 	transform: rotatex(10deg);
 	animation: rotateAngle 6s linear infinite;
     margin-top: 35%;
+	
 }
 

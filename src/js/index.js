@@ -1,4 +1,4 @@
-import '../scss/_main-menu.scss';
+import '../scss/main.scss'
 
 
 function transparentNavOnScroll(target, initialColor, transparentColor) {

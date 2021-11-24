@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
-import '../scss/_load-more.scss';
 import { throttle } from 'infinite-scroll/js/core';
 import template from '../templates/template';
 import SimpleLightbox from 'simplelightbox';
